@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Lista | Streamora</title>
+    <style>
+        :root {
+            --primary: #ff4d8d;
+            --secondary: #ff85a2;
+            --dark: #1a1a2e;
+            --light: #f8f8f8;
+            --accent: #a64dff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background: linear-gradient(to bottom, rgba(26, 26, 46, 0.9), transparent);
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+        }
+        
+        nav ul li a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+        
+        .main-content {
+            padding: 150px 5% 50px;
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .series-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 30px;
+        }
+        
+        .series-card {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        
+        .series-card:hover {
+            transform: scale(1.05);
+        }
+        
+        .series-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .series-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 15px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .series-card:hover .series-overlay {
+            opacity: 1;
+        }
+        
+        .series-info h3 {
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+        
+        .series-info p {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+        
+        .series-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-button {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .action-button:hover {
+            background: var(--primary);
+        }
+        
+        .empty-list {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.2rem;
+            opacity: 0.7;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 5%;
+            background-color: rgba(0, 0, 0, 0.3);
+            margin-top: 50px;
+        }
+        
+        @media (max-width: 768px) {
+            .series-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .series-card img {
+                height: 220px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">Streamora</div>
+        <nav>
+            <ul>
+                <li><a href="index.php">Início</a></li>
+                <li><a href="series.html">Séries</a></li>
+                <li><a href="index3.html">Minha Lista</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main class="main-content">
+        <h1 class="page-title">Minha Lista</h1>
+        
+        <div class="series-grid" id="seriesGrid">
+            <!-- Itens serão adicionados dinamicamente via JavaScript -->
+            <div class="empty-list" id="emptyList">
+                <p>Sua lista está vazia</p>
+                <p>Adicione séries clicando no ícone <i class="fas fa-plus"></i></p>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="footer-logo">Streamora</div>
+        <p>© 2023 Streamora - Plataforma de streaming desenvolvida por mulheres</p>
+    </footer>
+    
+    <script>
+        // Simulação de dados - na implementação real você buscaria isso de um backend
+        const myList = JSON.parse(localStorage.getItem('myList')) || [];
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const seriesGrid = document.getElementById('seriesGrid');
+            const emptyList = document.getElementById('emptyList');
+            
+            if (myList.length > 0) {
+                emptyList.style.display = 'none';
+                
+                myList.forEach(series => {
+                    const seriesCard = document.createElement('div');
+                    seriesCard.className = 'series-card';
+                    seriesCard.innerHTML = `
+                        <img src="${series.image}" alt="${series.title}">
+                        <div class="series-overlay">
+                            <div class="series-info">
+                                <h3>${series.title}</h3>
+                                <p>${series.creator}</p>
+                            </div>
+                            <div class="series-actions">
+                                <button class="action-button" onclick="playSeries('${series.id}')">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                                <button class="action-button" onclick="removeFromList('${series.id}')">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    seriesGrid.insertBefore(seriesCard, emptyList);
+                });
+            }
+        });
+        
+        function playSeries(seriesId) {
+            window.location.href = `video.html?series=${seriesId}`;
+        }
+        
+        function removeFromList(seriesId) {
+            const updatedList = myList.filter(item => item.id !== seriesId);
+            localStorage.setItem('myList', JSON.stringify(updatedList));
+            window.location.reload();
+        }
+
+
+        function addToList(seriesId, title, creator, image) {
+    const myList = JSON.parse(localStorage.getItem('myList')) || [];
+    
+    if (!myList.some(item => item.id === seriesId)) {
+        myList.push({ id: seriesId, title, creator, image });
+        localStorage.setItem('myList', JSON.stringify(myList));
+        alert('Adicionado à sua lista!');
+    } else {
+        alert('Esta série já está na sua lista!');
+    }
+}
+    </script>
+
+    
+</body>
+</html>

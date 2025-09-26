@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LunaFlix - Login e Cadastro</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="lz/Font-Awesome/css/all.min.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="lz/animate.min.css">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="fonts._googleapis.css">
+
+    <!-- SweetAlert2 -->
+    <script src="sweetalert2.all.min.js"></script>
+    <!-- Glider.js -->
+    <link rel="stylesheet" href="glider.min.css">
+
+</head>
+<body>
+    <!-- Fundo padrão -->
+    <div class="background-pattern"></div>
+    
+    <!-- Corações flutuantes -->
+    <div class="floating-hearts" id="hearts-container"></div>
+    
+    <!-- Elementos flutuantes decorativos -->
+    <div class="floating-elements" id="elements-container"></div>
+    
+    <div class="container">
+        <!-- Lado esquerdo - Formulário -->
+        <div class="left-side">
+            <div class="logo" id="logoId">
+                <div class="logo-icon">
+                    <img src="img/logo3.png" alt="">
+                </div>
+                <div class="logo-text">
+                    <h1>STREAMORA</h1>
+                    <p>Filmes • Séries • Magia</p>
+                </div>
+            </div>
+            
+            <div class="form-container">
+                <div class="form-wrapper" id="formWrapper">
+                    <!-- Seção de Login -->
+                    <div class="form-section" id="loginSection">
+                        <div class="form-header">
+                            <h2>Bem-vindo de volta!</h2>
+                            <p>Não tem uma conta? <a id="showRegister">Cadastre-se aqui</a></p>
+                        </div>
+                        
+                        <form id="loginForm">
+                            <div class="form-group">
+                                <label for="loginEmail">E-mail</label>
+                                <input type="email" id="loginEmail" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="loginPassword">Senha</label>
+                                <input type="password" id="loginPassword" class="form-control" required>
+                                <i class="fas fa-eye password-toggle" id="toggleLoginPassword"></i>
+                            </div>
+                            
+                            <div class="checkbox-group" style="display: none;">
+                                <input type="checkbox" id="remember">
+                                <label for="remember" >Lembrar-me</label>
+                            </div>
+                            
+                            <button type="submit" class="submit-btn animate__animated animate__pulse animate__infinite animate__slower">
+                                <i class="fas fa-sparkles" style="margin-right: 8px;"></i> Entrar
+                            </button>
+                        </form>
+                        
+                         <div class="social-login">
+                            <p>Ou cadastre-se com</p>
+                            <div class="social-icons">
+                                <div class="social-icon facebook">
+                                    <i class="fab fa-facebook-f"></i>
+                                </div>
+                                <div class="social-icon google">
+                                    <i class="fab fa-google"></i>
+                                </div>
+                                <div class="social-icon apple">
+                                    <i class="fab fa-apple"></i>
+                                </div>
+                            </div>
+                        </div>
+                     
+                    </div>
+                    
+                    <!-- Seção de Cadastro -->
+                   <!-- Seção de Cadastro -->
+                    <div class="form-section-register hidden" id="registerSection">
+                        <div class="form-header">
+                            <h2>Crie sua conta</h2>
+                            <p>Já tem uma conta? <a id="showLogin">Faça login aqui</a></p>
+                        </div>
+                        
+                        <form id="registerForm" method="post" action="php/registra_usuario.php" enctype="multipart/form-data">
+                            <!-- Container da foto de perfil DENTRO do formulário -->
+                            <div class="profile-picture-container">
+                                <label for="profilePicture" class="profile-picture-label">
+                                    <img id="profilePreview" src="img/perfil.png" alt="Foto de perfil">
+                                    <span class="upload-text">Clique para adicionar foto</span>
+                                    <input type="file" id="profilePicture" name="profilePicture" accept="image/*" style="display: none;">
+                                </label>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="name">Nome completo</label>
+                                <input type="text" id="name" name="nomeCompleto" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">E-mail</label>
+                                <input type="email" id="email" name="email" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="password">Senha</label>
+                                <input type="password" id="password" name="senha" class="form-control" required>
+                                <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="birthdate">Data de nascimento</label>
+                                <input type="date" id="birthdate" name="data_nascimento" class="form-control" required>
+                            </div>
+                            
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="terms" name="terms" required>
+                                <label for="terms">Eu concordo com os <a href="#">Termos de Serviço</a> e <a href="#">Política de Privacidade</a></label>
+                            </div>
+                            
+                            <div id="hiddeItem">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="newsletter" name="newsletter" checked>
+                                    <label for="newsletter">Desejo receber novidades e promoções por e-mail</label>
+                                </div>
+                            
+                                <button type="submit" class="submit-btn animate__animated animate__pulse animate__infinite animate__slower">
+                                    <i class="fas fa-sparkles" style="margin-right: 8px;"></i> Criar conta
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Lado direito - Carrossel -->
+        <div class="right-side">
+            <div class="carousel-container">
+                <h2 class="carousel-title">Descubra <span>conteúdo encantador</span></h2>
+                
+                <div class="glider">
+                    <div class="glider-slide">
+                        <div class="carousel-card">
+                            <img src="img/c1.jpg" alt="Romance" class="carousel-img">
+                            <div class="carousel-content">
+                                <h3>Histórias de Amor</h3>
+                                <div class="carousel-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <p>Descubra as mais belas histórias de amor que vão fazer seu coração vibrar.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="glider-slide">
+                        <div class="carousel-card">
+                            <img src="img/c1.jpg" alt="Drama" class="carousel-img">
+                            <div class="carousel-content">
+                                <h3>Dramas Intensos</h3>
+                                <div class="carousel-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <p>Emoções fortes e histórias que vão te fazer refletir sobre a vida.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="glider-slide">
+                        <div class="carousel-card">
+                            <img src="img/c1.jpg" alt="Comédia" class="carousel-img">
+                            <div class="carousel-content">
+                                <h3>Comédias Leves</h3>
+                                <div class="carousel-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <p>Risadas garantidas com nossas seleções de comédia mais divertidas.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="glider-slide">
+                        <div class="carousel-card">
+                            <img src="img/c1.jpg" alt="Fantasia" class="carousel-img">
+                            <div class="carousel-content">
+                                <h3>Mundo Fantástico</h3>
+                                <div class="carousel-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <p>Aventuras mágicas em mundos além da sua imaginação.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="glider-dots" id="dots"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="jquery.min.js"></script>
+    <!-- GSAP para animações -->
+    <script src="lz/gsap.min.js"></script>
+    <!-- Glider.js -->
+    <script src="glider.min.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="sweetalert2.all.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // Pré-visualização da foto de perfil
+document.getElementById('profilePicture').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        
+        reader.onload = function(event) {
+            document.getElementById('profilePreview').src = event.target.result;
+            document.querySelector('.profile-picture-label .upload-text').style.display = 'none';
+        }
+        
+        reader.readAsDataURL(file);
+    }
+});
+
+            // Criar corações flutuantes
+            const heartsContainer = document.getElementById('hearts-container');
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '<i class="fas fa-heart" style="color: var(--primary);"></i>';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = Math.random() * 100 + 'vh';
+                heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                heart.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                heartsContainer.appendChild(heart);
+            }
+            
+            // Criar elementos flutuantes decorativos
+            const elementsContainer = document.getElementById('elements-container');
+            const elements = ['star', 'moon', 'cloud', 'music', 'film'];
+            for (let i = 0; i < 10; i++) {
+                const element = document.createElement('div');
+                element.classList.add('floating-element');
+                const randomElement = elements[Math.floor(Math.random() * elements.length)];
+                element.innerHTML = `<i class="fas fa-${randomElement}" style="color: ${i % 2 === 0 ? '#a18cd1' : '#f8c291'};"></i>`;
+                element.style.left = Math.random() * 100 + 'vw';
+                element.style.top = Math.random() * 100 + 'vh';
+                element.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                element.style.animationDuration = (Math.random() * 20 + 15) + 's';
+                element.style.animationDelay = Math.random() * 10 + 's';
+                elementsContainer.appendChild(element);
+            }
+            
+            // Inicializar carrossel
+            new Glider(document.querySelector('.glider'), {
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                draggable: true,
+                dots: '#dots',
+                arrows: {
+                    prev: '.glider-prev',
+                    next: '.glider-next'
+                },
+                responsive: [
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1
+                        }
+                    }
+                ]
+            });
+            
+            // Mostrar/ocultar senha
+            $('#togglePassword, #toggleLoginPassword').click(function() {
+                const fieldId = $(this).attr('id') === 'togglePassword' ? '#password' : '#loginPassword';
+                const passwordField = $(fieldId);
+                const type = passwordField.attr('type') === 'password' ? 'text' : 'password';
+                passwordField.attr('type', type);
+                $(this).toggleClass('fa-eye fa-eye-slash');
+            });
+            
+            // Alternar entre login e cadastro
+            $('#showRegister').click(function(e) {
+                e.preventDefault();
+                $('#formWrapper').css('transform', 'translateX(2%)');
+                $('#loginSection').addClass('hidden');
+                $('#registerSection').removeClass('hidden');
+                $('#logoId').css('display', 'none');
+                $('#social').css('display', 'none');
+                $('#hiddeItem').css('display', 'block');
+            });
+            
+            $('#showLogin').click(function(e) {
+                e.preventDefault();
+                $('#formWrapper').css('transform', 'translateX(0)');
+                $('#registerSection').addClass('hidden');
+                $('#loginSection').removeClass('hidden');
+                $('#logoId').css('display', 'flex');
+                $('#hiddeItem').css('display', 'none');
+            });
+            
+            // Animação dos elementos com GSAP
+            gsap.from(".logo", {
+                duration: 1,
+                y: -50,
+                opacity: 0,
+                ease: "back.out(1.7)"
+            });
+            
+            gsap.from(".form-header", {
+                duration: 0.8,
+                x: -30,
+                opacity: 0,
+                delay: 0.3,
+                ease: "power2.out"
+            });
+            
+            gsap.from(".form-group", {
+                duration: 0.6,
+                y: 20,
+                opacity: 0,
+                stagger: 0.1,
+                delay: 0.6,
+                ease: "back.out(1.7)"
+            });
+            
+            gsap.from(".submit-btn", {
+                duration: 0.8,
+                scale: 0.8,
+                opacity: 0,
+                delay: 1.2,
+                ease: "elastic.out(1, 0.5)"
+            });
+            
+            gsap.from(".social-icons div", {
+                duration: 0.6,
+                y: 30,
+                opacity: 0,
+                stagger: 0.1,
+                delay: 1.5,
+                ease: "bounce.out"
+            });
+            
+            // Efeito hover nos cards do carrossel
+            $('.carousel-card').hover(
+                function() {
+                    $(this).css('transform', 'translateY(-10px)');
+                },
+                function() {
+                    $(this).css('transform', 'translateY(0)');
+                }
+            );
+            
+           // Validação do formulário de login
+$('#loginForm').submit(function(e) {
+    e.preventDefault();
+    
+    const formData = {
+        email: $('#loginEmail').val().trim(),
+        senha: $('#loginPassword').val().trim()
+    };
+    
+    const loginSwal = Swal.fire({
+        title: 'Autenticando...',
+        allowOutsideClick: false,
+        didOpen: () => Swal.showLoading(),
+        background: 'var(--light)',
+        color: 'var(--dark)'
+    });
+    
+    $.ajax({
+        url: 'php/login.php',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(formData),
+        dataType: 'json'
+    })
+    .done(function(response) {
+        loginSwal.close();
+        
+        if (response.success) {
+            Swal.fire({
+                title: response.user.isAdmin ? 'Bem-vindo, Administrador!' : 'Bem-vindo!',
+                text: response.message,
+                icon: 'success',
+                willClose: () => {
+                    const redirectUrl = response.redirect || 
+                                      (response.user.isAdmin ? 'adminPage.html' : 'index.php');
+                    window.location.href = redirectUrl;
+                }
+            });
+        } else {
+            // Tratamento melhorado para mensagens de erro
+            const errorTitle = response.message.includes('Credenciais') 
+                ? 'Credenciais incorretas' 
+                : 'Erro no login';
+                
+            const errorText = response.message.includes('Credenciais')
+                ? 'O e-mail ou senha estão incorretos. Por favor, verifique e tente novamente.'
+                : response.message;
+            
+            Swal.fire({
+                icon: 'error',
+                title: errorTitle,
+                html: `<div style="text-align:center;">
+                          <p>${errorText}</p>
+                          ${response.message.includes('Credenciais') 
+                            ? '<small style="color:#666;">Verifique se o Caps Lock está ativado</small>' 
+                            : ''}
+                       </div>`,
+                confirmButtonColor: 'var(--primary)',
+                background: 'var(--light)',
+                color: 'var(--dark)'
+            });
+        }
+    })
+    .fail(function(xhr) {
+        loginSwal.close();
+        
+        // Tratamento melhorado para erros de rede/HTTP
+        let errorMsg = 'Ocorreu um erro ao tentar fazer login';
+        let errorDetails = '';
+        
+        if (xhr.responseJSON) {
+            errorMsg = xhr.responseJSON.message || errorMsg;
+            if (xhr.responseJSON.message.includes('Credenciais')) {
+                errorMsg = 'Credenciais inválidas';
+                errorDetails = 'Verifique seu e-mail e senha';
+            }
+        } else if (xhr.status === 0) {
+            errorMsg = 'Sem conexão com o servidor';
+            errorDetails = 'Verifique sua conexão com a internet';
+        }
+        
+        Swal.fire({
+            icon: 'error',
+            title: 'Erro',
+            html: `<div style="text-align:center;">
+                     <p style="margin-bottom:8px;">${errorMsg}</p>
+                     ${errorDetails ? `<small style="color:#666;">${errorDetails}</small>` : ''}
+                   </div>`,
+            confirmButtonColor: 'var(--primary)',
+            background: 'var(--light)',
+            color: 'var(--dark)'
+        });
+        
+        console.error('Erro completo:', xhr);
+    });
+});
+            // Envio do formulário via AJAX
+            $('#registerForm').submit(function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                
+                $.ajax({
+                    url: 'php/registra_usuario.php',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.success) {
+                            Swal.fire({
+                                title: 'Sucesso!',
+                                text: response.message,
+                                icon: 'success',
+                                confirmButtonColor: 'var(--primary)',
+                                willClose: () => {
+                                    window.location.href = response.redirect;
+                                }
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Erro',
+                                text: response.message,
+                                icon: 'error',
+                                confirmButtonColor: 'var(--primary)'
+                            });
+                        }
+                    },
+                    error: function() {
+                        Swal.fire({
+                            title: 'Erro',
+                            text: 'Erro ao comunicar com o servidor',
+                            icon: 'error',
+                            confirmButtonColor: 'var(--primary)'
+                        });
+                    }
+                });
+            });
+            
+            // Efeito de brilho ao passar o mouse no botão
+            $('.submit-btn').hover(
+                function() {
+                    $(this).addClass('animate__animated animate__pulse animate__infinite');
+                },
+                function() {
+                    $(this).removeClass('animate__animated animate__pulse animate__infinite');
+                }
+            );
+        });
+
+
+    </script>
+</body>
+</html>

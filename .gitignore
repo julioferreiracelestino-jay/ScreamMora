@@ -1,0 +1,9 @@
+# Banco de dados
+*.sql
+
+# Configurações
+config.php
+.env
+
+# Logs
+*.log
